@@ -12,7 +12,7 @@ from app import add, subtract, multiply, divide
 # --- Tests for add() ---
 
 def test_add_positive_numbers():
-    assert add(2, 3) == 4
+    assert add(2, 2) == 4
 
 def hello_world():
     print("meow")
