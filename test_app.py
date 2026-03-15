@@ -12,8 +12,10 @@ from app import add, subtract, multiply, divide
 # --- Tests for add() ---
 
 def test_add_positive_numbers():
-    assert add(2, 3) == 5
+    assert add(2, 3) == 4
 
+def hello_world():
+    print("meow")
 
 def test_add_negative_numbers():
     assert add(-1, -1) == -2
