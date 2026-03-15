@@ -1,0 +1,58 @@
+# ============================================================
+# Workflow: Python CI
+# ============================================================
+# This workflow runs a CI pipeline for a Python application.
+# It triggers on:
+#   - Every push to the main branch
+#   - Every pull request targeting the main branch
+#
+# Key concepts demonstrated:
+#   - Multiple event triggers (push + pull_request)
+#   - Branch filtering (only main)
+#   - Using marketplace actions (checkout, setup-python)
+#   - Installing dependencies from requirements.txt
+#   - Running tests with pytest
+# ============================================================
+
+name: Python CI
+
+# --- Triggers ---
+# Run on push to main AND on pull requests to main.
+# This means CI runs both when code is directly pushed
+# and when someone opens/updates a PR.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # --- Job: test ---
+  # Checks out the code, sets up Python, installs dependencies,
+  # and runs the test suite.
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository code onto the runner.
+      # Without this step, the runner has no access to your code!
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Install Python on the runner.
+      # The runner has some tools pre-installed, but we use this
+      # action to get the exact Python version we want.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Step 3: Install our project's dependencies.
+      # This reads requirements.txt and installs everything listed.
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # Step 4: Run the tests.
+      # --verbose shows each test name and its result.
+      - name: Run tests
+        run: pytest --verbose
